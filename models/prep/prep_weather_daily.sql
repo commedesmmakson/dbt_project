@@ -1,33 +1,26 @@
-SELECT date, date_part('day', date), to_char(date, 'Month')
-FROM staging_weather_daily 
-
-
-
-
 WITH daily_data AS (
     SELECT * 
-    FROM staging_weather_daily
+    FROM {{ref('staging_weather_daily')}}
 ),
 add_features AS (
     SELECT *
-		, date_part('day', date) AS date_day 		-- number of the day of month
-		, date_part('month', date) AS date_month 	-- number of the month of year
-		, date_part('year', date) AS date_year 		-- number of year
-		, date_part('week', date) AS cw 			-- number of the week of year
-		, to_char(date, 'FMMonth') AS month_name 	-- name of the month
-		, to_char(date, 'Day') AS weekday 		-- name of the weekday
+        , DATE_PART('day', date) AS date_day        -- number of the day of month
+        , DATE_PART('month', date) AS date_month    -- number of the month of year
+        , DATE_PART('year', date) AS date_year      -- number of year
+        , DATE_PART('week', date) AS cw             -- number of the week of year
+        , TO_CHAR(date, 'FMMonth') AS month_name    -- name of the month
+        , TRIM(TO_CHAR(date, 'Day')) AS weekday         -- name of the weekday
     FROM daily_data 
 ),
 add_more_features AS (
     SELECT *
-		, (CASE 
-			WHEN month_name IN ('December', 'January', 'February') THEN 'winter'
-			WHEN month_name IN ('March', 'April', 'May') THEN 'spring'
-            WHEN month_name IN ('June', 'July', 'August') THEN 'summer'
-            WHEN month_name IN ('September', 'October', 'November') THEN 'autumn'
-		END) AS season
+        , (CASE 
+            WHEN month_name in ('December', 'January', 'February') THEN 'winter'
+            WHEN month_name in ('March', 'April', 'May') THEN 'spring'
+            WHEN month_name in ('June', 'July', 'August') THEN 'summer'
+            WHEN month_name in ('September', 'October', 'November') THEN 'autumn'
+           END) AS season
     FROM add_features
 )
 SELECT *
 FROM add_more_features
-ORDER BY date
