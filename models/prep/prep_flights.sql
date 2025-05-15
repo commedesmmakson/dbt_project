@@ -23,10 +23,3 @@ flights_cleaned AS(
     FROM flights_one_month
 )
 SELECT * FROM flights_cleaned
-
-;
-
-
-
-SELECT * 
-    FROM staging_flights_one_month;

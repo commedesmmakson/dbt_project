@@ -24,14 +24,3 @@ add_more_features AS (
 )
 SELECT *
 FROM add_more_features
-
-
-
-
-
-;
-
-
-
- SELECT * 
-    FROM staging_weather_daily
