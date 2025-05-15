@@ -1,6 +1,3 @@
-SELECT *
-FROM staging_airports;
-
 WITH airports_reorder AS (
     SELECT faa
     	   ,name
