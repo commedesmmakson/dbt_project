@@ -1,6 +1,6 @@
 WITH daily_data AS (
     SELECT * 
-    FROM {{ref('staging_weather_daily')}}
+    FROM staging_weather_daily
 ),
 add_features AS (
     SELECT *
@@ -24,3 +24,14 @@ add_more_features AS (
 )
 SELECT *
 FROM add_more_features
+
+
+
+
+
+;
+
+
+
+ SELECT * 
+    FROM staging_weather_daily
