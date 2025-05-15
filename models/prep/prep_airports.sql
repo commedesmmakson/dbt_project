@@ -9,6 +9,6 @@ WITH airports_reorder AS (
     	   ,country
     	   ,region
     	   ,city
-    FROM staging_airports
+    FROM {{ ref('staging_airports') }}
 )
 SELECT * FROM airports_reorder
